@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mode: Au Parc</title>
+</head>
+<style>/* Appliquer la police Pacifico à tout le corps de la page */
+body {
+    font-family: "Pacifico", cursive;
+    background-color: #E6E6FA;
+}
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#timer {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+#photoMessage {
+    color: green;
+    margin: 10px 0;
+}
+
+#photosList img {
+    width: 100px; /* Ajuste la taille des photos */
+    margin: 10px;
+    border-radius: 10px; /* Ajoute un style aux images */
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:#b7ebbb;
+}
+
+button:hover {
+    background-color: #1e3d59;
+    color: white;
+}
+
+input[type="number"] {
+    padding: 5px;
+    width: 100px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    background-color: #f5f0e1;
+}
+
+.challenge-item {
+    background: rgba(255, 255, 255, 0.2);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+</style>    
+ <title>Mode: A la maison</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Jouer a la maison</h1>
+        <p>Préparez-vous pour le défi !</p>
+        
+        <label for="number-of-challenges">Nombre de défis :</label>
+        <input type="number" id="number-of-challenges" min="1" value="1">
+        <button id="generate-challenges">Générer les défis</button>
+        
+        <div id="challenge-list"></div>
+
+        <label for="timerInput">Choisissez le temps en secondes :</label>
+        <input type="number" id="timerInput" value="60" min="10" max="300">
+        
+        <button id="startButton">Commencer le défi</button>
+        <div id="timer">Temps restant : <span id="time">60</span> secondes</div>
+
+        <button id="takePhotoButton">Prendre une photo</button>
+        <div id="photoMessage"></div>
+
+        <div id="photosContainer" style="display:none;">
+            <h2>Photos prises :</h2>
+            <div id="photosList"></div>
+            <button id="sharePhotosButton">Partager les photos</button>
+            <button id="downloadPhotosButton">Télécharger toutes les photos</button>
+        </div>
+
+        <div id="videoContainer" style="display:none;"></div>
+
+        <script>let timer;
+            let timeLeft;
+            const startButton = document.getElementById('startButton');
+            const timeDisplay = document.getElementById('time');
+            const timerInput = document.getElementById('timerInput');
+            const takePhotoButton = document.getElementById('takePhotoButton');
+            const photoMessage = document.getElementById('photoMessage');
+            const videoContainer = document.getElementById('videoContainer');
+            const photos = []; // Tableau pour stocker les photos
+            
+            startButton.addEventListener('click', () => {
+                timeLeft = parseInt(timerInput.value); // Récupérer le temps de l'input
+                startTimer();
+            });
+            
+            takePhotoButton.addEventListener('click', () => {
+                takePhoto();
+            });
+            
+            function startTimer() {
+                clearInterval(timer); // Arrêter tout timer précédent
+                timeDisplay.textContent = timeLeft; // Afficher le temps initial
+            
+                timer = setInterval(() => {
+                    timeLeft--;
+                    timeDisplay.textContent = timeLeft;
+            
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        alert("Temps écoulé !");
+                        document.getElementById('photosContainer').style.display = 'block'; // Afficher le conteneur des photos
+                    }
+                }, 1000);
+            }
+            
+            function takePhoto() {
+                // Demande l'accès à la caméra
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        const video = document.createElement('video');
+                        video.srcObject = stream;
+                        video.autoplay = true;
+                        videoContainer.innerHTML = ''; // Effacer tout précédent contenu
+                        videoContainer.appendChild(video);
+                        videoContainer.style.display = 'block';
+            
+                        const captureButton = document.createElement('button');
+                        captureButton.textContent = "Prendre une photo";
+                        videoContainer.appendChild(captureButton);
+            
+                        captureButton.addEventListener('click', () => {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            const context = canvas.getContext('2d');
+                            context.drawImage(video, 0, 0);
+                            
+                            // Montrer la photo
+                            const imgSrc = canvas.toDataURL('image/png');
+                            const img = document.createElement('img');
+                            img.src = imgSrc;
+                            document.getElementById('photosList').appendChild(img);
+                            photos.push(imgSrc); // Ajouter la photo au tableau
+            
+                            // Arrêter le flux vidéo
+                            stream.getTracks().forEach(track => track.stop());
+                            videoContainer.style.display = 'none'; // Cacher le conteneur
+                            photoMessage.textContent = "Photo prise avec succès !"; // Message de confirmation
+                        });
+                    })
+                    .catch(err => {
+                        console.error("Erreur d'accès à la caméra:", err);
+                        photoMessage.textContent = "Erreur lors de l'accès à la caméra.";
+                    });
+            }
+            
+            document.getElementById('generate-challenges').addEventListener('click', function() {
+                const numberOfChallenges = document.getElementById('number-of-challenges').value;
+                const challengeList = document.getElementById('challenge-list');
+                
+                // Réinitialise la liste
+                challengeList.innerHTML = '';
+            
+                // Exemple de défis (ajoute tes propres défis ici)
+                const challenges = [
+                    "Prendre une photo d'un arbre",
+                    "Capturer une photo d'un bâtiment",
+                    "Faire une selfie avec un ami",
+                    "Prendre une photo d'un animal",
+                    "Capturer une image d'un paysage",
+                ];
+            
+                for (let i = 0; i < numberOfChallenges; i++) {
+                    const challengeItem = document.createElement('div');
+                    challengeItem.classList.add('challenge-item');
+                    challengeItem.textContent = challenges[i % challenges.length]; // Répète les défis si nécessaire
+                    challengeList.appendChild(challengeItem);
+                }
+            });
+            
+            // Partager les photos
+            document.getElementById('sharePhotosButton').onclick = function() {
+                let shareMessage = 'Voici les photos prises lors des défis :\n';
+                
+                // Crée un message avec les défis et les photos
+                photos.forEach((photo, index) => {
+                    shareMessage += `Défi ${index + 1}: ${photo}\n`;
+                });
+                
+                // Encode le message pour l'URL
+                const encodedMessage = encodeURIComponent(shareMessage);
+                const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+                
+                // Ouvre WhatsApp pour partager
+                window.open(whatsappUrl, '_blank');
+            };
+            
+            document.getElementById('downloadPhotosButton').onclick = function() {
+                photos.forEach((photo, index) => {
+                    const link = document.createElement('a');
+                    link.href = photo; // Lien vers la photo
+                    link.download = `photo${index + 1}.png`; // Nom du fichier
+                    document.body.appendChild(link);
+                    link.click(); // Simuler un clic pour télécharger
+                    document.body.removeChild(link); // Supprimer le lien
+                });
+            };
+            </script>
+    </div>
+</body>
+</html>
+

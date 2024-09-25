@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode: Au Parc</title>
+    <style>
+        /* Appliquer la police Pacifico à tout le corps de la page */
+body {
+    font-family: "Pacifico", cursive;
+    background-color: #E6E6FA;
+    color: #333; /* Couleur du texte */
+    margin: 0;
+    padding: 0;
+}
+
+/* Style du conteneur principal */
+.container {
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px; /* Limite la largeur pour un meilleur rendu */
+    background-color: rgba(255, 255, 255, 0.8); /* Fond légèrement transparent */
+    border-radius: 10px; /* Bords arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour le conteneur */
+}
+
+/* Style des titres */
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 20px 0;
+}
+
+/* Style des éléments du timer */
+#timer {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+/* Style du message de photo */
+#photoMessage {
+    color: green;
+    margin: 10px 0;
+}
+
+/* Style des photos */
+#photosList img {
+    width: 100px; /* Ajuste la taille des photos */
+    margin: 10px;
+    border-radius: 10px; /* Ajoute un style aux images */
+}
+
+/* Style des boutons */
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #b7ebbb;
+    font-size: 1em;
+    transition: background-color 0.3s; /* Transition pour un effet au survol */
+}
+
+button:hover {
+    background-color: #1e3d59;
+    color: white;
+}
+
+/* Style des inputs */
+input[type="number"] {
+    padding: 5px;
+    width: 100px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    background-color: #f5f0e1;
+}
+
+/* Style pour la liste des défis */
+.challenge-list {
+    margin: 20px auto; /* Centre le conteneur */
+    padding: 20px;
+    max-width: 600px; /* Limite la largeur pour un meilleur rendu */
+}
+
+.challenge-list ul {
+    list-style: none; /* Enlève les puces */
+    padding: 0; /* Enlève le padding par défaut */
+    text-align: left; /* Aligne le texte à gauche */
+}
+
+.challenge-item {
+    background: rgba(255, 255, 255, 0.2); /* Fond légèrement transparent */
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px; /* Bords arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #b7ebbb; /* Ajoute une bordure autour de chaque défi */
+    transition: transform 0.2s; /* Transition pour l'effet au survol */
+}
+
+.challenge-item:hover {
+    transform: scale(1.05); /* Effet de zoom au survol */
+}
+
+/* Style pour le conteneur vidéo */
+#videoContainer {
+    margin: 20px auto;
+    display: none; /* Masqué par défaut */
+}
+
+/* Style du footer, si tu souhaites en ajouter un plus tard */
+footer {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Titre principal -->
+        <h1>Bienvenue sur "Mode : Au Parc" ! 🎉📸</h1>
+
+        <!-- Vidéo de présentation -->
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/votre-video" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- Introduction et tutoriels -->
+        <p>Prêt à découvrir un jeu de défis photo complètement délirant ? Avant de plonger dans l'aventure, n'hésitez pas à regarder notre vidéo de présentation 🎥 pour bien comprendre comment ça marche ! Tu peux aussi consulter les <a href="#tutos">tutoriels</a> pour des astuces et conseils afin de relever les défis comme un pro ! 😎</p>
+
+        <h2>Le concept est simple :</h2>
+        <p>
+            <strong>Choisis tes défis :</strong> Décide combien de défis tu souhaites relever. Que ce soit 5 ou 10, c'est toi qui choisis ! Plus tu en choisis, plus tu vas devoir faire preuve de créativité pour réussir chaque mission.<br>
+            <strong>Lance le chrono ⏳ :</strong> Choisis la durée de ton défi. Tu peux prendre ton temps ou jouer rapidement, selon ton style.<br>
+            <strong>Prends ton appareil photo :</strong> Armé de ton téléphone, c'est le moment de partir à la chasse aux photos ! Chaque défi te pousse à capturer des images amusantes et inattendues. Que ce soit avec un animal, en imitant une statue, ou en créant une pose originale, les possibilités sont infinies.<br>
+            <strong>Garde tes souvenirs :</strong> Toutes les photos que tu prends peuvent être téléchargées sur ton telephone
+        </p>
+
+        <h2>Pourquoi essayer "Mode : Au Parc" ?</h2>
+        <p>
+            <strong>Des défis amusants et originaux 🤪 :</strong> Oublie les missions ennuyeuses. Ici, tu vas faire des choses que tu n'aurais jamais imaginées, comme trouver un chien pour poser à côté de toi ou capturer une expression drôle d'un pote.<br>
+            <strong>Une expérience totalement unique 🎯 :</strong> Que tu relèves les défis en solo ou avec des amis, chaque session est unique. Tu gères le nombre de défis, le temps imparti et, surtout, ce que tu fais des photos.<br>
+            <strong>Téléchargement des photos :</strong> Les photos peuvent être téléchargés sur votre téléphone, pour les conserver et les comparer à celles des amis !
+
+        <!-- Section des défis -->
+        <div class="challenge-list">
+            <h2>Exemples de défis qui t'attendent :</h2>
+            <ul>
+                <li>Prendre une photo avec un chien 🐕</li>
+                <li>Poser comme une statue dans un parc 🗽</li>
+                <li>Imiter un animal et capturer le moment 🐸</li>
+                <li>Trouver et photographier une feuille en forme de cœur 🍂</li>
+                <li>Faire un saut en l'air et prendre la photo au bon moment 🏃‍♂️📸</li>
+                <li>Prendre une photo en reflétant ton visage dans l'eau 💧</li>
+                <li>Trouver un oiseau et prendre un cliché de lui en plein vol 🦅</li>
+                <li>Prendre une photo où tu caches ton visage avec un objet trouvé dans le parc 🎩</li>
+            </ul>
+        </div>
+        <!-- Bouton pour commencer -->
+        <button id="startButton" onclick="window.location.href='index.html'">Commencer le défi</button>
+    </div>
+
+    <!-- Footer avec lien vers les tutos -->
+    <footer>
+        <p>Besoin d'aide ? Consulte nos <a href="#tutos">tutoriels</a> pour devenir un expert des défis photo !</p>
+    </footer>
+</body>
+</html>
