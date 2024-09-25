@@ -3,189 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Mode: Au Parc</title>
-</head>
-<style>/* Appliquer la police Pacifico à tout le corps de la page */
- body {
-    font-family: "Pacifico", cursive;
-    background-color: #E6E6FA;
-}
-
-.container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-#timer {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
-
-#photoMessage {
-    color: green;
-    margin: 10px 0;
-}
-
-#photosList img {
-    width: 100px; /* Ajuste la taille des photos */
-    margin: 10px;
-    border-radius: 10px; /* Ajoute un style aux images */
-}
-
-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color:#b7ebbb;
-}
-
-button:hover {
-    background-color: #1e3d59;
-    color: white;
-}
-
-input[type="number"] {
-    padding: 5px;
-    width: 100px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin: 10px 0;
-    background-color: #f5f0e1;
-}
-
-.challenge-item {
-    background: rgba(255, 255, 255, 0.2);
-    margin: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-</style>    
- <title>Mode: En ville</title>
+    <style>
+        body {
+            font-family: "Pacifico", cursive;
+            background-color: #E6E6FA;
+            color: black;
+        }
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        #photosList img {
+            max-width: 100px;
+            width: auto;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #b7ebbb;
+        }
+        button:hover {
+            background-color: #1e3d59;
+            color: white;
+        }
+        .challenge-item {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .emoji {
+            cursor: pointer;
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+        .back-button {
+            background-color: #b7ebbb;
+            color: rgb(0, 0, 0);
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #1e3d59;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .custom-file-input {
+            background-color: #b7ebbb;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            color: rgb(0, 0, 0);
+            font-size: 1em;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .custom-file-input:hover {
+            background-color: #1e3d59;
+        }
+        input[type="number"], select {
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #b7ebbb;
+            border-radius: 5px;
+            width: calc(50% - 20px);
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus, select:focus {
+            border-color: #1e3d59;
+            outline: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Jouer en ville</h1>
+        <a href="index.html" class="back-button">Retour aux sections de jeu</a>
+        <a href="tutoriels.html" class="back-button">(Re)voir les tutoriels ✨</a>
         <p>Préparez-vous pour le défi !</p>
-        
+
         <label for="number-of-challenges">Nombre de défis :</label>
         <input type="number" id="number-of-challenges" min="1" value="1">
         <button id="generate-challenges">Générer les défis</button>
         
         <div id="challenge-list"></div>
 
-        <label for="timerInput">Choisissez le temps en secondes :</label>
-        <input type="number" id="timerInput" value="60" min="10" max="300">
+        <label for="timeUnit">Choisissez l'unité de temps :</label>
+        <select id="timeUnit">
+            <option value="seconds">Secondes</option>
+            <option value="minutes">Minutes</option>
+        </select>
+
+        <label for="timerInput">Choisissez le temps :</label>
+        <input type="number" id="timerInput" value="1" min="1">
         
         <button id="startButton">Commencer le défi</button>
         <div id="timer">Temps restant : <span id="time">60</span> secondes</div>
 
-        <button id="takePhotoButton">Prendre une photo</button>
-        <div id="photoMessage"></div>
-
         <div id="photosContainer" style="display:none;">
             <h2>Photos prises :</h2>
             <div id="photosList"></div>
-            <button id="sharePhotosButton">Partager les photos</button>
             <button id="downloadPhotosButton">Télécharger toutes les photos</button>
         </div>
 
-        <div id="videoContainer" style="display:none;"></div>
+        <canvas id="photoCanvas" style="display:none;"></canvas>
 
-        <script>let timer;
+        <script>
+            let timer;
             let timeLeft;
             const startButton = document.getElementById('startButton');
             const timeDisplay = document.getElementById('time');
             const timerInput = document.getElementById('timerInput');
-            const takePhotoButton = document.getElementById('takePhotoButton');
-            const photoMessage = document.getElementById('photoMessage');
-            const videoContainer = document.getElementById('videoContainer');
-            const photos = []; // Tableau pour stocker les photos
-            
+            const photos = [];
+
             startButton.addEventListener('click', () => {
-                timeLeft = parseInt(timerInput.value); // Récupérer le temps de l'input
+                let timeValue = parseInt(timerInput.value);
+                if (document.getElementById('timeUnit').value === 'minutes') {
+                    timeValue *= 60;
+                }
+                timeLeft = timeValue;
                 startTimer();
             });
-            
-            takePhotoButton.addEventListener('click', () => {
-                takePhoto();
-            });
-            
+
             function startTimer() {
-                clearInterval(timer); // Arrêter tout timer précédent
-                timeDisplay.textContent = timeLeft; // Afficher le temps initial
-            
+                clearInterval(timer);
+                timeDisplay.textContent = timeLeft;
+
                 timer = setInterval(() => {
                     timeLeft--;
                     timeDisplay.textContent = timeLeft;
-            
+
                     if (timeLeft <= 0) {
                         clearInterval(timer);
                         alert("Temps écoulé !");
-                        document.getElementById('photosContainer').style.display = 'block'; // Afficher le conteneur des photos
+                        document.getElementById('photosContainer').style.display = 'block';
                     }
                 }, 1000);
             }
-            
-            function takePhoto() {
-                // Demande l'accès à la caméra
-                navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(stream => {
-                        const video = document.createElement('video');
-                        video.srcObject = stream;
-                        video.autoplay = true;
-                        videoContainer.innerHTML = ''; // Effacer tout précédent contenu
-                        videoContainer.appendChild(video);
-                        videoContainer.style.display = 'block';
-            
-                        const captureButton = document.createElement('button');
-                        captureButton.textContent = "Prendre une photo";
-                        videoContainer.appendChild(captureButton);
-            
-                        captureButton.addEventListener('click', () => {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
-                            const context = canvas.getContext('2d');
-                            context.drawImage(video, 0, 0);
-                            
-                            // Montrer la photo
-                            const imgSrc = canvas.toDataURL('image/png');
-                            const img = document.createElement('img');
-                            img.src = imgSrc;
-                            document.getElementById('photosList').appendChild(img);
-                            photos.push(imgSrc); // Ajouter la photo au tableau
-            
-                            // Arrêter le flux vidéo
-                            stream.getTracks().forEach(track => track.stop());
-                            videoContainer.style.display = 'none'; // Cacher le conteneur
-                            photoMessage.textContent = "Photo prise avec succès !"; // Message de confirmation
-                        });
-                    })
-                    .catch(err => {
-                        console.error("Erreur d'accès à la caméra:", err);
-                        photoMessage.textContent = "Erreur lors de l'accès à la caméra.";
-                    });
-            }
-            
+
             document.getElementById('generate-challenges').addEventListener('click', function() {
                 const numberOfChallenges = document.getElementById('number-of-challenges').value;
                 const challengeList = document.getElementById('challenge-list');
-                
-                // Réinitialise la liste
                 challengeList.innerHTML = '';
-            
-                // Exemple de défis (ajoute tes propres défis ici)
+
                 const challenges = [
                     "Prendre une photo d'un arbre",
                     "Capturer une photo d'un bâtiment",
@@ -193,44 +179,77 @@ input[type="number"] {
                     "Prendre une photo d'un animal",
                     "Capturer une image d'un paysage",
                 ];
-            
+
+                const shuffledChallenges = challenges.sort(() => Math.random() - 0.5);
+
                 for (let i = 0; i < numberOfChallenges; i++) {
                     const challengeItem = document.createElement('div');
                     challengeItem.classList.add('challenge-item');
-                    challengeItem.textContent = challenges[i % challenges.length]; // Répète les défis si nécessaire
+                    challengeItem.textContent = shuffledChallenges[i % shuffledChallenges.length];
+                    
+                    const emoji = document.createElement('span');
+                    emoji.classList.add('emoji');
+                    emoji.textContent = '📷';
+                    challengeItem.appendChild(emoji);
+                    
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    fileInput.capture = 'camera';
+                    challengeItem.appendChild(fileInput);
+
+                    const img = document.createElement('img');
+                    img.style.display = 'none';
+                    challengeItem.appendChild(img);
+
+                    emoji.addEventListener('click', () => {
+                        fileInput.click(); // Ouvrir le sélecteur de fichiers
+                    });
+
+                    fileInput.addEventListener('change', (event) => {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                img.setAttribute('src', e.target.result);
+                                img.style.display = 'block'; // Afficher l'image
+                                img.style.width = '100px'; // Changer la taille de l'image à 100px
+                                photos.push({ src: e.target.result, challenge: challengeItem.textContent }); // Ajouter la photo et le défi au tableau
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+
                     challengeList.appendChild(challengeItem);
                 }
             });
-            
-            // Partager les photos
-            document.getElementById('sharePhotosButton').onclick = function() {
-                let shareMessage = 'Voici les photos prises lors des défis :\n';
-                
-                // Crée un message avec les défis et les photos
-                photos.forEach((photo, index) => {
-                    shareMessage += `Défi ${index + 1}: ${photo}\n`;
-                });
-                
-                // Encode le message pour l'URL
-                const encodedMessage = encodeURIComponent(shareMessage);
-                const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
-                
-                // Ouvre WhatsApp pour partager
-                window.open(whatsappUrl, '_blank');
-            };
-            
+
             document.getElementById('downloadPhotosButton').onclick = function() {
                 photos.forEach((photo, index) => {
-                    const link = document.createElement('a');
-                    link.href = photo; // Lien vers la photo
-                    link.download = `photo${index + 1}.png`; // Nom du fichier
-                    document.body.appendChild(link);
-                    link.click(); // Simuler un clic pour télécharger
-                    document.body.removeChild(link); // Supprimer le lien
+                    const img = new Image();
+                    img.src = photo.src;
+
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+
+                        ctx.drawImage(img, 0, 0);
+
+                        ctx.fillStyle = 'black';
+                        ctx.font = '120px Arial'; // Ajuster la taille de la police pour le texte
+                        ctx.textAlign = 'center';
+                        ctx.fillText(photo.challenge, canvas.width / 2, 100); // Placer le texte près du haut de l'image
+
+                        const link = document.createElement('a');
+                        link.download = `photo_${index + 1}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                    };
                 });
             };
-            </script>
+        </script>
     </div>
 </body>
 </html>
-
