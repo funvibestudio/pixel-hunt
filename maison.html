@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mode: A la maison</title>
+    <title>Mode: Au Parc</title>
     <style>
         body {
             font-family: "Pacifico", cursive;
@@ -103,8 +103,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Jouer au parc</h1>
-        <a href="index.html" class="back-button">Retour aux sections de jeu</a>
+        <h1>Jouer à la maison</h1>
+        <a href="sections.html" class="back-button">Retour aux sections de jeu</a>
         <a href="tutoriels.html" class="back-button">(Re)voir les tutoriels ✨</a>
         <p>Préparez-vous pour le défi !</p>
 
@@ -129,7 +129,6 @@
         <div id="photosContainer" style="display:none;">
             <h2>Photos prises :</h2>
             <div id="photosList"></div>
-            <button id="downloadPhotosButton">Télécharger toutes les photos</button>
         </div>
 
         <canvas id="photoCanvas" style="display:none;"></canvas>
@@ -202,6 +201,12 @@
                     img.style.display = 'none';
                     challengeItem.appendChild(img);
 
+                    // Bouton de téléchargement individuel
+                    const downloadButton = document.createElement('button');
+                    downloadButton.textContent = 'Télécharger';
+                    downloadButton.style.display = 'none'; // Cacher tant qu'aucune photo n'est prise
+                    challengeItem.appendChild(downloadButton);
+
                     emoji.addEventListener('click', () => {
                         fileInput.click(); // Ouvrir le sélecteur de fichiers
                     });
@@ -213,43 +218,42 @@
                             reader.onload = function(e) {
                                 img.setAttribute('src', e.target.result);
                                 img.style.display = 'block'; // Afficher l'image
-                                img.style.width = '100px'; // Changer la taille de l'image à 100px
-                                photos.push({ src: e.target.result, challenge: challengeItem.textContent }); // Ajouter la photo et le défi au tableau
+                                img.style.width = '100px'; // Limiter la taille à 100px
+                                photos.push({ src: e.target.result, challenge: challengeItem.textContent });
+                                downloadButton.style.display = 'inline-block'; // Afficher le bouton de téléchargement
                             };
                             reader.readAsDataURL(file);
                         }
                     });
 
+                    // Ajouter la fonctionnalité de téléchargement pour chaque photo
+                    downloadButton.addEventListener('click', () => {
+                        const img = new Image();
+                        img.src = photos.find(photo => photo.challenge === challengeItem.textContent).src;
+
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+
+                            ctx.drawImage(img, 0, 0);
+
+                            ctx.fillStyle = 'black';
+                            ctx.font = '120px Arial';
+                            ctx.textAlign = 'center';
+                            ctx.fillText(challengeItem.textContent, canvas.width / 2, 100);
+
+                            const link = document.createElement('a');
+                            link.download = `photo_${i + 1}.png`;
+                            link.href = canvas.toDataURL('image/png');
+                            link.click();
+                        };
+                    });
+
                     challengeList.appendChild(challengeItem);
                 }
             });
-
-            document.getElementById('downloadPhotosButton').onclick = function() {
-                photos.forEach((photo, index) => {
-                    const img = new Image();
-                    img.src = photo.src;
-
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-
-                        ctx.drawImage(img, 0, 0);
-
-                        ctx.fillStyle = 'black';
-                        ctx.font = '120px Arial'; // Ajuster la taille de la police pour le texte
-                        ctx.textAlign = 'center';
-                        ctx.fillText(photo.challenge, canvas.width / 2, 100); // Placer le texte près du haut de l'image
-
-                        const link = document.createElement('a');
-                        link.download = `photo_${index + 1}.png`;
-                        link.href = canvas.toDataURL('image/png');
-                        link.click();
-                    };
-                });
-            };
         </script>
     </div>
 </body>
-</html>
