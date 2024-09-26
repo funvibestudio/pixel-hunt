@@ -3,175 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mode: Au Parc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
     <style>
         /* Appliquer la police Pacifico à tout le corps de la page */
-body {
-    font-family: "Pacifico", cursive;
-    background-color: #E6E6FA;
-    color: #333; /* Couleur du texte */
-    margin: 0;
-    padding: 0;
-}
+        body {
+            font-family: "Pacifico", cursive;
+            background-color: #E6E6FA;
+        }
 
-/* Style du conteneur principal */
-.container {
-    text-align: center;
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 800px; /* Limite la largeur pour un meilleur rendu */
-    background-color: rgba(255, 255, 255, 0.8); /* Fond légèrement transparent */
-    border-radius: 10px; /* Bords arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour le conteneur */
-}
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-/* Style des titres */
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-}
+        .game-modes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
 
-h2 {
-    font-size: 2em;
-    margin: 20px 0;
-}
+        .game-modes-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Assure que le bouton est en bas */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            width: 300px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
 
-/* Style des éléments du timer */
-#timer {
-    font-size: 1.5em;
-    margin: 10px 0;
-}
+        .game-modes-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
 
-/* Style du message de photo */
-#photoMessage {
-    color: green;
-    margin: 10px 0;
-}
+        .game-modes-item h3 {
+            font-size: 1.5em;
+            margin: 15px;
+        }
 
-/* Style des photos */
-#photosList img {
-    width: 100px; /* Ajuste la taille des photos */
-    margin: 10px;
-    border-radius: 10px; /* Ajoute un style aux images */
-}
+        .game-modes-item p {
+            margin: 0 15px 15px;
+            flex-grow: 1; /* Remplit l'espace vertical restant */
+        }
 
-/* Style des boutons */
-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #b7ebbb;
-    font-size: 1em;
-    transition: background-color 0.3s; /* Transition pour un effet au survol */
-}
+        .game-modes-item a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background-color: #fe9c9c;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 0 0 15px 15px;
+            transition: background-color 0.3s;
+        }
 
-button:hover {
-    background-color: #1e3d59;
-    color: white;
-}
-
-/* Style des inputs */
-input[type="number"] {
-    padding: 5px;
-    width: 100px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin: 10px 0;
-    background-color: #f5f0e1;
-}
-
-/* Style pour la liste des défis */
-.challenge-list {
-    margin: 20px auto; /* Centre le conteneur */
-    padding: 20px;
-    max-width: 600px; /* Limite la largeur pour un meilleur rendu */
-}
-
-.challenge-list ul {
-    list-style: none; /* Enlève les puces */
-    padding: 0; /* Enlève le padding par défaut */
-    text-align: left; /* Aligne le texte à gauche */
-}
-
-.challenge-item {
-    background: rgba(255, 255, 255, 0.2); /* Fond légèrement transparent */
-    margin: 10px;
-    padding: 10px;
-    border-radius: 8px; /* Bords arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid #b7ebbb; /* Ajoute une bordure autour de chaque défi */
-    transition: transform 0.2s; /* Transition pour l'effet au survol */
-}
-
-.challenge-item:hover {
-    transform: scale(1.05); /* Effet de zoom au survol */
-}
-
-/* Style pour le conteneur vidéo */
-#videoContainer {
-    margin: 20px auto;
-    display: none; /* Masqué par défaut */
-}
-
-/* Style du footer, si tu souhaites en ajouter un plus tard */
-footer {
-    margin-top: 30px;
-    font-size: 0.9em;
-    color: #666;
-}
+        .game-modes-item a:hover {
+            background-color: #ff7070;
+        }
 
     </style>
+    <title>PixelHunt</title>
 </head>
 <body>
     <div class="container">
-        <!-- Titre principal -->
-        <h1>Bienvenue sur "Mode : Au Parc" ! 🎉📸</h1>
+        <h1>PixelHunt</h1>
+        <div class="game-modes">
+            <div class="game-modes-item">
+                <img src="https://www.merignac.com/sites/default/files/2022-01/parc-bourran.jpg" alt="Mode de jeu 1">
+                <h3>Au parc</h3>
+                <p>Ce mode de jeu est jouable dans un parc comme le jardin public</p>
+                <a href="parc.html">Jouer au parc</a>
+            </div>
 
-        <!-- Vidéo de présentation -->
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/votre-video" frameborder="0" allowfullscreen></iframe>
+            <div class="game-modes-item">
+                <img src="https://www.guide-bordeaux-gironde.com/_bibli/pages_images/92/bordeauxrue02.jpg?v=content&width=348&height=258&pixelRatio=2.6250" alt="Mode de jeu 2">
+                <h3>En ville</h3>
+                <p>Ce mode de jeu est jouable en ville</p>
+                <a href="ville.html">Jouer en ville</a>
+            </div>
+
+            <div class="game-modes-item">
+                <img src="https://i.pinimg.com/736x/8a/d5/25/8ad5254a1f6aa0ab88c3e7ac813e5ee2.jpg" alt="Mode de jeu 3">
+                <h3>À la maison</h3>
+                <p>Ce mode de jeu est jouable à la maison</p>
+                <a href="maison.html">Jouer à la maison</a>
+            </div>
         </div>
-
-        <!-- Introduction et tutoriels -->
-        <p>Prêt à découvrir un jeu de défis photo complètement délirant ? Avant de plonger dans l'aventure, n'hésitez pas à regarder notre vidéo de présentation 🎥 pour bien comprendre comment ça marche ! Tu peux aussi consulter les <a href="#tutos">tutoriels</a> pour des astuces et conseils afin de relever les défis comme un pro ! 😎</p>
-
-        <h2>Le concept est simple :</h2>
-        <p>
-            <strong>Choisis tes défis :</strong> Décide combien de défis tu souhaites relever. Que ce soit 5 ou 10, c'est toi qui choisis ! Plus tu en choisis, plus tu vas devoir faire preuve de créativité pour réussir chaque mission.<br>
-            <strong>Lance le chrono ⏳ :</strong> Choisis la durée de ton défi. Tu peux prendre ton temps ou jouer rapidement, selon ton style.<br>
-            <strong>Prends ton appareil photo :</strong> Armé de ton téléphone, c'est le moment de partir à la chasse aux photos ! Chaque défi te pousse à capturer des images amusantes et inattendues. Que ce soit avec un animal, en imitant une statue, ou en créant une pose originale, les possibilités sont infinies.<br>
-            <strong>Garde tes souvenirs :</strong> Toutes les photos que tu prends peuvent être téléchargées sur ton telephone
-        </p>
-
-        <h2>Pourquoi essayer "Mode : Au Parc" ?</h2>
-        <p>
-            <strong>Des défis amusants et originaux 🤪 :</strong> Oublie les missions ennuyeuses. Ici, tu vas faire des choses que tu n'aurais jamais imaginées, comme trouver un chien pour poser à côté de toi ou capturer une expression drôle d'un pote.<br>
-            <strong>Une expérience totalement unique 🎯 :</strong> Que tu relèves les défis en solo ou avec des amis, chaque session est unique. Tu gères le nombre de défis, le temps imparti et, surtout, ce que tu fais des photos.<br>
-            <strong>Téléchargement des photos :</strong> Les photos peuvent être téléchargés sur votre téléphone, pour les conserver et les comparer à celles des amis !
-
-        <!-- Section des défis -->
-        <div class="challenge-list">
-            <h2>Exemples de défis qui t'attendent :</h2>
-            <ul>
-                <li>Prendre une photo avec un chien 🐕</li>
-                <li>Poser comme une statue dans un parc 🗽</li>
-                <li>Imiter un animal et capturer le moment 🐸</li>
-                <li>Trouver et photographier une feuille en forme de cœur 🍂</li>
-                <li>Faire un saut en l'air et prendre la photo au bon moment 🏃‍♂️📸</li>
-                <li>Prendre une photo en reflétant ton visage dans l'eau 💧</li>
-                <li>Trouver un oiseau et prendre un cliché de lui en plein vol 🦅</li>
-                <li>Prendre une photo où tu caches ton visage avec un objet trouvé dans le parc 🎩</li>
-            </ul>
-        </div>
-        <!-- Bouton pour commencer -->
-        <button id="startButton" onclick="window.location.href='index.html'">Commencer le défi</button>
     </div>
-
-    <!-- Footer avec lien vers les tutos -->
-    <footer>
-        <p>Besoin d'aide ? Consulte nos <a href="#tutos">tutoriels</a> pour devenir un expert des défis photo !</p>
-    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
